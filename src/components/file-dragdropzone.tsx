@@ -13,6 +13,10 @@ export default function FileDragdropzone() {
         e.preventDefault();
         const file = fileRef.current?.files?.[0];
         console.log(file);
+        if (file) {
+          const formData = new FormData();
+          formData.append("file", file);
+        }
       }}>
       <p>파일을 여기에 끌어다 놓거나 클릭하여 업로드하세요.</p>
       <input type="file" ref={fileRef} className={"w-full px-5 py-20 border-4 border-dotted border-indigo-700"} />

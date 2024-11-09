@@ -11,14 +11,13 @@ export default function DropboxImageList({ searchInput }) {
     queryFn: () => searchFiles(searchInput),
   });
 
+  // @ts-ignore
+  if (isPending) return <Spinner />;
   if (error) return <p>Error loading notes</p>;
 
   return (
     <section className={"flex flex-wrap justify-between "}>
       {data?.map((image) => <DropboxImage key={image.id} image={image} />)}
-      {/*<DropboxImage />*/}
-      {/*<DropboxImage />*/}
-      {/*<DropboxImage />*/}
       {/*<DropboxImage />*/}
     </section>
   );

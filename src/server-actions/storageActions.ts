@@ -20,9 +20,9 @@ export async function uploadFile(formatData: FormData) {
   return data;
 }
 
-export async function searchFiles(search: string) {
+export async function searchFiles(searchInput: string) {
   const supabase = await createClient();
-  const { data, error } = await supabase.storage.from(process.env.NEXT_PUBLIC_STORAGE_BUCKET as string).list(undefined, { search: search });
+  const { data, error } = await supabase.storage.from(process.env.NEXT_PUBLIC_STORAGE_BUCKET as string).list(undefined, { search: searchInput });
 
   handleError(error);
 

@@ -25,6 +25,6 @@ export async function searchFiles(searchInput: string) {
   const { data, error } = await supabase.storage.from(process.env.NEXT_PUBLIC_STORAGE_BUCKET as string).list(undefined, { search: searchInput });
 
   handleError(error);
-
+  console.log(data);
   return data;
 }

@@ -1,7 +1,7 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
-// @ts-ignore
+
 function handleError(error) {
   if (error) {
     console.error(error);

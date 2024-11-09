@@ -11,7 +11,7 @@ export default function Ui() {
     <div>
       <SearchComponent searchInput={searchInput} setSearchInput={setSearchInput} />
       <FileDragdropzone />
-      <DropboxImageList />
+      <DropboxImageList searchInput={searchInput} />
     </div>
   );
 }

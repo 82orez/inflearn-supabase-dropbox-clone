@@ -18,14 +18,19 @@ export default function FileDragdropzone() {
     onError: (error) => console.error(error),
   });
 
-  const onDrop = useCallback(async (acceptedFiles) => {
+  const onDrop = useCallback((acceptedFiles: any[]) => {
     // * Do something with the files
-    const file = acceptedFiles?.[0];
 
-    if (file) {
-      const formData = new FormData();
-      formData.append("file", file);
-      console.log(formData.get("file"));
+    if (acceptedFiles.length > 0) {
+      const formData = new FormData(); // formData 의 자료형은 객체.
+
+      // acceptedFiles 의 자료형은 배열이고, file 의 자료형은 File 이므로 name 이라는 속성을 가진다.
+      // 따라서 forEach 사용하여 formData(객체)를 다음과 같은 형태로 만들어 준다.
+      // {'file\'s name': File, 'file\'s name': File,...}
+      acceptedFiles.forEach((file) => {
+        formData.append(file.name, file);
+        return;
+      });
 
       uploadImageMutation.mutate(formData);
     }
@@ -34,7 +39,7 @@ export default function FileDragdropzone() {
     // }
   }, []);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, multiple: true });
 
   return (
     <>
@@ -52,7 +57,7 @@ export default function FileDragdropzone() {
 
       <form
         // @ts-ignore
-        onSubmit={async (e: Event) => {
+        onSubmit={(e: Event) => {
           e.preventDefault();
 
           const file = fileRef.current?.files?.[0];

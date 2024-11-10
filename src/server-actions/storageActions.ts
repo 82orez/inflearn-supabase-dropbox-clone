@@ -25,6 +25,16 @@ export async function searchFiles(searchInput: string) {
   const { data, error } = await supabase.storage.from(process.env.NEXT_PUBLIC_STORAGE_BUCKET as string).list(undefined, { search: searchInput });
 
   handleError(error);
-  console.log(data);
+  // console.log(data);
+  return data;
+}
+
+export async function deleteFile(fileName: string) {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase.storage.from(process.env.NEXT_PUBLIC_STORAGE_BUCKET as string).remove([fileName]);
+
+  handleError(error);
+
   return data;
 }

@@ -20,6 +20,24 @@ export async function uploadFile(formatData: FormData) {
   return data;
 }
 
+export async function uploadDragNDropFile(formatData: FormData) {
+  const supabase = await createClient();
+
+  const files = Array.from(formatData.entries()).map(([name, file]) => {
+    return file as File;
+  });
+
+  const results = await Promise.all(
+    files.map(async (file) => {
+      return supabase.storage.from(process.env.NEXT_PUBLIC_STORAGE_BUCKET as string).upload(file.name, file, { upsert: true });
+    }),
+  );
+
+  // handleError(error);
+
+  return results;
+}
+
 export async function searchFiles(searchInput: string) {
   const supabase = await createClient();
   const { data, error } = await supabase.storage.from(process.env.NEXT_PUBLIC_STORAGE_BUCKET as string).list(undefined, { search: searchInput });

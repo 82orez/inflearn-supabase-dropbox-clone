@@ -9,6 +9,7 @@ import { useDropzone } from "react-dropzone";
 
 export default function FileDragdropzone() {
   const fileRef = useRef<HTMLInputElement | null>(null);
+
   const uploadImageMutation = useMutation({
     mutationFn: uploadFile,
     onSuccess: () => {
@@ -24,9 +25,9 @@ export default function FileDragdropzone() {
     if (file) {
       const formData = new FormData();
       formData.append("file", file);
+      console.log(formData.get("file"));
 
-      const result = uploadImageMutation.mutate(formData);
-      console.log(result);
+      uploadImageMutation.mutate(formData);
     }
     // else {
     //   alert("No file selected!");
@@ -61,8 +62,7 @@ export default function FileDragdropzone() {
             const formData = new FormData();
             formData.append("file", file);
 
-            const result = uploadImageMutation.mutate(formData);
-            console.log(result);
+            uploadImageMutation.mutate(formData);
           } else {
             alert("No file selected!");
           }

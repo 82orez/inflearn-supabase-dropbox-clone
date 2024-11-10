@@ -28,7 +28,7 @@ export async function uploadDragNDropFile(formatData: FormData) {
   });
 
   const results = await Promise.all(
-    files.map(async (file) => {
+    files.map((file) => {
       return supabase.storage.from(process.env.NEXT_PUBLIC_STORAGE_BUCKET as string).upload(file.name, file, { upsert: true });
     }),
   );

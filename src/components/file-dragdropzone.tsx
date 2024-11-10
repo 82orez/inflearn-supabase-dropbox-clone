@@ -2,7 +2,7 @@
 
 import { Button, Spinner } from "@material-tailwind/react";
 import { useCallback, useRef } from "react";
-import { uploadFile } from "@/server-actions/storageActions";
+import { uploadDragNDropFile, uploadFile } from "@/server-actions/storageActions";
 import { useMutation } from "@tanstack/react-query";
 import { queryClient } from "@/app/react-query-provider";
 import { useDropzone } from "react-dropzone";
@@ -12,6 +12,14 @@ export default function FileDragdropzone() {
 
   const uploadImageMutation = useMutation({
     mutationFn: uploadFile,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["images"] });
+    },
+    onError: (error) => console.error(error),
+  });
+
+  const uploadImageDragNDropMutation = useMutation({
+    mutationFn: uploadDragNDropFile,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["images"] });
     },
@@ -32,7 +40,7 @@ export default function FileDragdropzone() {
         return;
       });
 
-      uploadImageMutation.mutate(formData);
+      uploadImageDragNDropMutation.mutate(formData);
     }
     // else {
     //   alert("No file selected!");
@@ -47,7 +55,7 @@ export default function FileDragdropzone() {
 
       <div {...getRootProps()} className={"w-full px-5 py-16 border-4 border-dotted border-indigo-700 cursor-pointer text-xl "}>
         <input {...getInputProps()} />
-        {uploadImageMutation.isPending ? (
+        {uploadImageDragNDropMutation.isPending ? (
           // @ts-ignore
           <Spinner />
         ) : (

@@ -30,9 +30,9 @@ export default function FileDragdropzone() {
     // * Do something with the files
 
     if (acceptedFiles.length > 0) {
-      const formData = new FormData(); // formData 의 자료형은 객체.
+      const formData = new FormData(); // FormData 의 자료형은 객체.
 
-      // acceptedFiles 의 자료형은 배열이고, file 의 자료형은 File 이므로 name 이라는 속성을 가진다.
+      // acceptedFiles 의 자료형은 배열이고, file 의 자료형은 File 이므로 File.name 이라는 속성을 가진다.
       // 따라서 forEach 사용하여 formData(객체)를 다음과 같은 형태로 만들어 준다.
       // {'file\'s name': File, 'file\'s name': File,...}
       acceptedFiles.forEach((file) => {
@@ -59,7 +59,19 @@ export default function FileDragdropzone() {
           // @ts-ignore
           <Spinner />
         ) : (
-          <>{isDragActive ? <p>Drop the files here ...</p> : <p>Drag and drop some files here, or click to select files!</p>}</>
+          <>
+            {isDragActive ? (
+              <p>Drop the files here ...</p>
+            ) : (
+              <div>
+                <p>Drag and drop some files here, or click to select files!</p>
+                {/*@ts-ignore*/}
+                <Button color={"cyan"} size={"lg"} className={"mt-4"}>
+                  Click here!
+                </Button>
+              </div>
+            )}
+          </>
         )}
       </div>
 
